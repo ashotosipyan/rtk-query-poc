@@ -1,14 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/query/react';
 import {api} from './api';
+import {singleApi} from './singlePokemonApi.ts';
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    // Add other reducers here if needed
+    [singleApi.reducerPath]: singleApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware().concat(api.middleware, singleApi.middleware),
   devTools: true,
 });
 

@@ -5,19 +5,17 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 const List = () => {
-  // const {data, error, isLoading} = useGetTodosQuery(undefined, {
-  //   skip: true,
-  // });
+  const {data, error, isLoading, refetch} = useGetTodosQuery();
 
-  const selectorData = useSelector(api.endpoints?.getTodos.select());
-
-  console.log({selectorData});
+  // const selectorData = useSelector(api.endpoints?.getTodos.select());
+  //
+  console.log({data});
 
   const dispatch = useDispatch();
 
-  const customFetch = () => {
-    dispatch(api.endpoints?.getTodos.initiate());
-  };
+  // const customFetch = () => {
+  //   dispatch(api.endpoints?.getTodos.initiate());
+  // };
 
   // const [trigger, { data, error }] = useLazyQuery();
 
@@ -38,14 +36,14 @@ const List = () => {
         <Text>Next page</Text>
       </Pressable>
       <Pressable
-        onPress={() => customFetch()}
+        onPress={() => refetch()}
         style={{backgroundColor: 'blue', padding: 15, marginBottom: 20}}>
         <Text>Refresh</Text>
       </Pressable>
 
       <View style={{paddingHorizontal: 20}}>
-        {selectorData &&
-          selectorData.data?.results?.map(todo => (
+        {data &&
+          data?.results?.map(todo => (
             <Text
               key={todo.id}
               style={{

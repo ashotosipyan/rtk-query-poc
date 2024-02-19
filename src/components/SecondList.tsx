@@ -1,32 +1,26 @@
-import {Text, View} from 'react-native';
-import {api, useGetTodosQuery} from '../services/api.ts';
-import {useDispatch, useSelector} from 'react-redux';
+import {Image, Text, View} from 'react-native';
+import {useGetSinglePokemonQuery} from '../services/singlePokemonApi.ts';
+import * as url from 'url';
 
 const SecondList = () => {
   // const {data, error, isLoading} = useGetTodosQuery();
   // const dispatch = useDispatch();
-  const selectorData = useSelector(api.endpoints?.getTodos.select());
+  // const selectorData = useSelector(api.endpoints?.getTodos.select());
   // const selectorData = dispatch(api.endpoints?.getTodos.initiate());
 
-  console.log({selectorData});
+  // console.log({selectorData});
+  const {data, error, isLoading} = useGetSinglePokemonQuery();
 
-  // if (isLoading) return <Text>Loading...</Text>;
+  if (isLoading) return <Text>Loading...</Text>;
   // if (error) return <Text>Error: {error.message}</Text>;
 
   return (
     <View style={{paddingHorizontal: 20}}>
-      {selectorData.data?.results.map(todo => (
-        <Text
-          key={todo.id}
-          style={{
-            marginBottom: 15,
-            textTransform: 'capitalize',
-            fontSize: 15,
-            fontWeight: '700',
-          }}>
-          {todo.name}
-        </Text>
-      ))}
+      <Image
+        source={{uri: `${data.sprites.back_default}`}}
+        style={{width: 200, height: 200}}
+      />
+      <Text style={{textAlign: 'center'}}>{data.name}</Text>
     </View>
   );
 };
